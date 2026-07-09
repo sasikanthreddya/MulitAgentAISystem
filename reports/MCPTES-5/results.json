@@ -1,0 +1,52 @@
+[
+  {
+    "suite": "ivr",
+    "title": "IVR: Place call with valid To/From/Url returns 201 queued",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 492,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ivr",
+    "title": "IVR: Poll placed call to terminal status with duration and price",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 30000,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ivr",
+    "title": "IVR: Place call missing To returns 400 error 21201",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 259,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ivr",
+    "title": "IVR: Calls API with invalid Account SID/Auth Token returns 401",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 223,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ivr",
+    "title": "IVR: Get unknown call sid returns 404",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 255,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  }
+]

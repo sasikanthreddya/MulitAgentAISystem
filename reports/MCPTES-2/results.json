@@ -1,0 +1,62 @@
+[
+  {
+    "suite": "api",
+    "title": "API: Create booking with valid payload returns 200 and matching bookingid",
+    "category": "Positive",
+    "status": "failed",
+    "duration": 1246,
+    "retry": 0,
+    "error": "Expected HTTP 200 with bookingid + matching booking body. Observed HTTP 418 \"I'm a teapot\", body: \"I'm a Teapot\". POST /booking with payload {firstname: John, lastname: Doe, totalprice: 150, depositpaid: true, bookingdates: {checkin: 2026-08-01, checkout: 2026-08-10}, additionalneeds: Breakfast}.",
+    "screenshotPath": null
+  },
+  {
+    "suite": "api",
+    "title": "API: Update booking with valid auth token returns 200 and updated values",
+    "category": "Positive",
+    "status": "failed",
+    "duration": 251,
+    "retry": 0,
+    "error": "POST /auth succeeded (200, token issued). Expected HTTP 200 with updated booking fields from PUT /booking/3 with Cookie: token=<token>. Observed HTTP 418 \"I'm a teapot\", body: \"I'm a Teapot\".",
+    "screenshotPath": null
+  },
+  {
+    "suite": "api",
+    "title": "API: Get booking IDs with no filters returns 200 and full list",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 507,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "api",
+    "title": "API: Get booking IDs with firstname/lastname filters returns only matching IDs",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 812,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "api",
+    "title": "API: Update booking without valid auth token returns 403 Forbidden",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 6253,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "api",
+    "title": "API: Get non-existent bookingid returns 404 Not Found",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 245,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  }
+]

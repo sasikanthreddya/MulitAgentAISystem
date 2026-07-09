@@ -1,0 +1,9 @@
+.env
+.env.twilio
+.env.jira-ui
+reports/**/*.png
+node_modules/
+.playwright-mcp/
+target/
+test-results/
+playwright-report/

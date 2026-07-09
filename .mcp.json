@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "mcp-atlassian": {
+      "command": "uvx",
+      "args": ["mcp-atlassian", "--env-file", "${CLAUDE_PROJECT_DIR:-.}/.env"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "rest-api": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/scripts/run-with-env.mjs",
+        "${CLAUDE_PROJECT_DIR:-.}/.env",
+        "npx", "-y", "dkmaker-mcp-rest-api"
+      ]
+    },
+    "rest-api-twilio": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/scripts/run-with-env.mjs",
+        "${CLAUDE_PROJECT_DIR:-.}/.env.twilio",
+        "npx", "-y", "dkmaker-mcp-rest-api"
+      ]
+    }
+  }
+}
