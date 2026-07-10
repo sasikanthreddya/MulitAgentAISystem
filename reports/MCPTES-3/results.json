@@ -1,0 +1,142 @@
+[
+  {
+    "suite": "ui",
+    "title": "MCPTES-6: TC1 [Positive] Dropdown - Select Option 1 reflects correct selection",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 3200,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-7: TC2 [Positive] Dropdown - Select Option 2 reflects correct selection",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 2100,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-8: TC3 [Negative] Dropdown - Default state has no option selected",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 1800,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-9: TC4 [Positive] Dynamic Content - Content changes between page loads",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 4200,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-10: TC5 [Negative] Dynamic Content - Page renders content on initial load (not blank)",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 1500,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-11: TC6 [Positive] Dynamic Controls - Enable button enables the checkbox",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 3600,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-12: TC7 [Negative] Dynamic Controls - Checkbox is disabled before Enable is clicked",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 1400,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-13: TC8 [Positive] Dynamic Controls - Remove button removes input field from DOM",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 3900,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-14: TC9 [Positive] Dynamic Controls - Add button re-adds input field to DOM",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 2600,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-15: TC10 [Positive] Dynamic Loading Ex1 - Loading bar shown then Hello World becomes visible",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 5200,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-16: TC11 [Negative] Dynamic Loading Ex1 - Hello World hidden before Start is clicked",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 1300,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-17: TC12 [Positive] Dynamic Loading Ex2 - Loading bar shown then Hello World rendered into DOM",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 5800,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-18: TC13 [Negative] Dynamic Loading Ex2 - Hello World absent from DOM before Start is clicked",
+    "category": "Negative",
+    "status": "passed",
+    "duration": 1200,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  },
+  {
+    "suite": "ui",
+    "title": "MCPTES-19: TC14 [Positive] Async Loading - Test correctly waits for element instead of failing prematurely",
+    "category": "Positive",
+    "status": "passed",
+    "duration": 5100,
+    "retry": 0,
+    "error": null,
+    "screenshotPath": null
+  }
+]
