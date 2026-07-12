@@ -15,7 +15,7 @@ function uniqueBooking() {
 }
 
 test.describe("Booking API", () => {
-  test("TC1 [Positive] Create booking with valid payload returns 200 and matching bookingid", async ({ request }) => {
+  test("TC1 [Positive] Create booking with valid payload returns 200 and matching bookingid", { tag: "@sanity" }, async ({ request }) => {
     const payload = uniqueBooking();
     const res = await request.post("/booking", { data: payload });
     expect(res.status()).toBe(200);
@@ -38,7 +38,7 @@ test.describe("Booking API", () => {
     expect(await putRes.json()).toMatchObject(updated);
   });
 
-  test("TC3 [Positive] Get booking IDs with no filters returns 200 and full list", async ({ request }) => {
+  test("TC3 [Positive] Get booking IDs with no filters returns 200 and full list", { tag: "@sanity" }, async ({ request }) => {
     const res = await request.get("/booking");
     expect(res.status()).toBe(200);
     const body = await res.json();

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Dropdown", () => {
-  test("TC1 [Positive] Dropdown - Select Option 1 reflects correct selection", async ({ page }) => {
+  test("TC1 [Positive] Dropdown - Select Option 1 reflects correct selection", { tag: "@sanity" }, async ({ page }) => {
     await page.goto("/dropdown");
     const dropdown = page.getByRole("combobox");
     await dropdown.selectOption({ label: "Option 1" });

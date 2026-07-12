@@ -20,7 +20,8 @@
       "command": "node",
       "args": [
         "${CLAUDE_PROJECT_DIR:-.}/scripts/run-with-env.mjs",
-        "${CLAUDE_PROJECT_DIR:-.}/.env.twilio",
+        "${CLAUDE_PROJECT_DIR:-.}/.env",
+        "--map", "REST_BASE_URL=TWILIO_BASE_URL,AUTH_BASIC_USERNAME=TWILIO_ACCOUNT_SID,AUTH_BASIC_PASSWORD=TWILIO_AUTH_TOKEN",
         "npx", "-y", "dkmaker-mcp-rest-api"
       ]
     }

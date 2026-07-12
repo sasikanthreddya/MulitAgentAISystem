@@ -4,22 +4,37 @@
 // (which has known issues via npx on Windows) — just Node built-ins, so this
 // works identically for any teammate, CI runner, or Claude Code client.
 //
-// Usage: node run-with-env.mjs <envFile> <command> [args...]
+// Usage: node run-with-env.mjs <envFile> [--map TARGET=SOURCE,...] <command> [args...]
 // The env file always wins over an inherited process env var of the same
-// name — each MCP server (rest-api vs rest-api-twilio) has its own env file
-// specifying its own REST_BASE_URL/creds, and a stray machine-wide env var
-// (e.g. REST_BASE_URL set globally on a dev box) must not silently override
-// one server's endpoint with the other's. A missing env file is silently
-// skipped rather than erroring, so the same .mcp.json still works in CI
-// where credentials are injected directly with no file present.
+// name — a stray machine-wide env var (e.g. REST_BASE_URL set globally on a
+// dev box) must not silently override a value the checked-in file specifies.
+// A missing env file is silently skipped rather than erroring, so the same
+// .mcp.json still works in CI where credentials are injected directly with
+// no file present.
+//
+// --map lets two MCP server instances of the *same* underlying tool (e.g.
+// dkmaker-mcp-rest-api, which always reads fixed names REST_BASE_URL/
+// AUTH_BASIC_USERNAME/AUTH_BASIC_PASSWORD) share one .env file with distinct,
+// purpose-specific key names, remapped to the generic names that instance
+// needs at spawn time. Example: --map REST_BASE_URL=TWILIO_BASE_URL sets
+// env.REST_BASE_URL from the file's TWILIO_BASE_URL value.
 
 import { spawn } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 
-const [, , envFile, command, ...cmdArgs] = process.argv;
+const rawArgs = process.argv.slice(2);
+const envFile = rawArgs.shift();
+
+let mapSpec = null;
+if (rawArgs[0] === "--map") {
+  rawArgs.shift();
+  mapSpec = rawArgs.shift();
+}
+
+const [command, ...cmdArgs] = rawArgs;
 
 if (!command) {
-  console.error("Usage: run-with-env.mjs <envFile> <command> [args...]");
+  console.error("Usage: run-with-env.mjs <envFile> [--map TARGET=SOURCE,...] <command> [args...]");
   process.exit(1);
 }
 
@@ -41,6 +56,15 @@ if (envFile && existsSync(envFile)) {
       value = value.slice(1, -1);
     }
     env[key] = value;
+  }
+}
+
+if (mapSpec) {
+  for (const pair of mapSpec.split(",")) {
+    const [target, source] = pair.split("=");
+    if (target && source && env[source] !== undefined) {
+      env[target] = env[source];
+    }
   }
 }
 

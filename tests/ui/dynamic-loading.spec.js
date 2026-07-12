@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Dynamic Loading Ex1 (element hidden, present in DOM)", () => {
-  test("TC10 [Positive] Dynamic Loading Ex1 - Loading bar shown then Hello World becomes visible", async ({ page }) => {
+  test("TC10 [Positive] Dynamic Loading Ex1 - Loading bar shown then Hello World becomes visible", { tag: "@sanity" }, async ({ page }) => {
     await page.goto("/dynamic_loading/1");
     await page.getByRole("button", { name: "Start" }).click();
     await expect(page.locator("#loading")).toBeVisible();

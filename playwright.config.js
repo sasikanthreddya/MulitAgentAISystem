@@ -1,10 +1,10 @@
 import { defineConfig } from "@playwright/test";
 import { loadEnvFile } from "./scripts/load-env.mjs";
 
-// Loaded separately (not merged) — both files define REST_BASE_URL for their
-// own unrelated target, and a merge would let .env.twilio's value clobber .env's.
-const apiEnv = loadEnvFile(".env");
-const twilioEnv = loadEnvFile(".env.twilio");
+// Single .env file for everything — Twilio's values use a distinct TWILIO_
+// prefix (see .env.example) precisely so they don't collide with the generic
+// REST_BASE_URL used by the "api" project below.
+const env = loadEnvFile(".env");
 
 export default defineConfig({
   testDir: "tests",
@@ -36,18 +36,18 @@ export default defineConfig({
       name: "api",
       testDir: "tests/api",
       use: {
-        baseURL: apiEnv.REST_BASE_URL || "https://restful-booker.herokuapp.com",
+        baseURL: env.REST_BASE_URL || "https://restful-booker.herokuapp.com",
       },
     },
     {
       name: "ivr",
       testDir: "tests/ivr",
       use: {
-        baseURL: "https://api.twilio.com",
+        baseURL: env.TWILIO_BASE_URL || "https://api.twilio.com",
         extraHTTPHeaders: {
           Authorization:
             "Basic " +
-            Buffer.from(`${twilioEnv.AUTH_BASIC_USERNAME}:${twilioEnv.AUTH_BASIC_PASSWORD}`).toString("base64"),
+            Buffer.from(`${env.TWILIO_ACCOUNT_SID}:${env.TWILIO_AUTH_TOKEN}`).toString("base64"),
         },
       },
     },
