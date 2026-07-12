@@ -11,6 +11,12 @@
     "test:api": "npm run pretest && playwright test --project=api",
     "test:ivr": "npm run pretest && playwright test --project=ivr",
     "test:all": "npm run pretest && playwright test",
+    "ui:sanity": "npm run pretest && playwright test --project=ui --grep @sanity",
+    "ui:regression": "npm run test:ui",
+    "api:sanity": "npm run pretest && playwright test --project=api --grep @sanity",
+    "api:regression": "npm run test:api",
+    "sanity": "npm run pretest && playwright test --project=ui --project=api --grep @sanity",
+    "regression": "npm run test:all",
     "report:open": "node -e \"require('child_process').exec(process.platform==='win32'?'start target/extent-report/index.html':'open target/extent-report/index.html')\""
   },
   "devDependencies": {

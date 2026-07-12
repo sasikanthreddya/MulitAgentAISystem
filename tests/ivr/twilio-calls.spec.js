@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { loadEnvFile } from "../../scripts/load-env.mjs";
 
-const twilioEnv = loadEnvFile(".env.twilio");
-const accountSid = twilioEnv.AUTH_BASIC_USERNAME;
+const env = loadEnvFile(".env");
+const accountSid = env.TWILIO_ACCOUNT_SID;
 
 // This account is a Twilio Trial account: it can only call a verified Outgoing
 // Caller ID, not Twilio's documented "magic" test number — using an owned

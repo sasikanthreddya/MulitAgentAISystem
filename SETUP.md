@@ -12,10 +12,9 @@ This project drives real systems (Jira, a browser, REST APIs, Twilio) through Cl
 
 ```
 cp .env.example .env
-cp .env.twilio.example .env.twilio
 ```
 
-Fill in `.env`:
+One single file for everything. Fill in `.env`:
 
 | Variable | Where to get it |
 |---|---|
@@ -23,14 +22,10 @@ Fill in `.env`:
 | `JIRA_USERNAME` | The Atlassian account email tied to your API token |
 | `JIRA_API_TOKEN` | A **classic** (unscoped) token from https://id.atlassian.com/manage-profile/security/api-tokens — a scoped token missing `read:jira-work`/`write:jira-work` will silently return empty project lists |
 | `REST_BASE_URL` | Base URL of whatever API-under-test a story targets (defaults to Restful-Booker) |
+| `TWILIO_BASE_URL` / `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` | Twilio Console → Account → API keys & tokens (Account SID / Auth Token) |
+| `RAHUL_SHETTY_EMAIL` / `RAHUL_SHETTY_PASSWORD` | Test account for the Rahul Shetty Academy practice checkout flow (`tests/ui/checkout-flow.spec.js`) |
 
-Fill in `.env.twilio`:
-
-| Variable | Where to get it |
-|---|---|
-| `AUTH_BASIC_USERNAME` / `AUTH_BASIC_PASSWORD` | Twilio Console → Account → API keys & tokens (Account SID / Auth Token) |
-
-That's it — **no shell exports, no `setx`, no restarting anything special.** `.mcp.json` points `mcp-atlassian` at `.env` via its own `--env-file` flag, and wraps the two `rest-api` servers with [`scripts/run-with-env.mjs`](scripts/run-with-env.mjs) (a small dependency-free Node script — `dotenv-cli` was tried first but is broken under `npx` on Windows, so this project rolled its own) pointed at `.env`/`.env.twilio` respectively. Each server loads its own file directly, independent of whatever process launched Claude Code.
+That's it — **no shell exports, no `setx`, no restarting anything special.** `.mcp.json` points `mcp-atlassian` at `.env` via its own `--env-file` flag, and wraps both `rest-api` servers with [`scripts/run-with-env.mjs`](scripts/run-with-env.mjs) (a small dependency-free Node script — `dotenv-cli` was tried first but is broken under `npx` on Windows, so this project rolled its own), both pointed at the same `.env`. `rest-api` and `rest-api-twilio` are two instances of the same underlying tool and both always read the generic names `REST_BASE_URL`/`AUTH_BASIC_USERNAME`/`AUTH_BASIC_PASSWORD` — so the Twilio instance is launched with `run-with-env.mjs`'s `--map` flag, which remaps its `TWILIO_*`-prefixed values onto those generic names at spawn time only for that one server. Each server process loads independently, independent of whatever process launched Claude Code.
 
 ## 3. Open the project
 
@@ -58,8 +53,8 @@ Claude Code has a non-interactive CLI mode, so a pipeline stage can trigger an a
 claude -p "use api-restful-jira-tester to test MCPTES-2"
 ```
 
-For CI, **don't commit `.env`/`.env.twilio`** — instead inject `JIRA_URL`, `JIRA_USERNAME`, `JIRA_API_TOKEN`, `REST_BASE_URL`, `AUTH_BASIC_USERNAME`, `AUTH_BASIC_PASSWORD` as real environment variables from your CI credential store (e.g. Jenkins "Credentials" bound to env vars in the pipeline). `run-with-env.mjs` silently skips loading if the file doesn't exist, so the same `.mcp.json` works unmodified in CI with zero files present. Note the precedence is **file wins over inherited process env vars when both exist** (not the other way around) — this project's own machine hit a real incident where a stray OS-level `REST_BASE_URL` silently overrode `.env.twilio`'s value, so the loader was changed to make the checked-in file authoritative. In CI, since no `.env`/`.env.twilio` files are present at all, the injected env vars are simply all there is to load — this precedence only matters if you ever run with both a file and a conflicting env var present locally.
+For CI, **don't commit `.env`** — instead inject `JIRA_URL`, `JIRA_USERNAME`, `JIRA_API_TOKEN`, `REST_BASE_URL`, `TWILIO_BASE_URL`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` as real environment variables from your CI credential store (e.g. Jenkins "Credentials" bound to env vars in the pipeline) — note these are the `TWILIO_*`-prefixed names, since `run-with-env.mjs --map` only remaps a *file's* values, not injected process env vars directly; if you inject env vars straight into the process for CI, also directly set `REST_BASE_URL`/`AUTH_BASIC_USERNAME`/`AUTH_BASIC_PASSWORD` for the Twilio server's own process rather than relying on the map. `run-with-env.mjs` silently skips loading if the file doesn't exist, so the same `.mcp.json` works unmodified in CI with zero files present. Note the precedence is **file wins over inherited process env vars when both exist** (not the other way around) — this project's own machine hit a real incident where a stray OS-level `REST_BASE_URL` silently overrode Twilio's intended value, so the loader was changed to make the checked-in file authoritative. In CI, since no `.env` file is present at all, the injected env vars are simply all there is to load — this precedence only matters if you ever run with both a file and a conflicting env var present locally.
 
 ## 6. Committing
 
-`reports/` is tracked in git (so the team sees test history). `.env` and `.env.twilio` are gitignored — never commit real credentials. If you add a new API target, just change `REST_BASE_URL` locally — no code changes needed.
+`reports/` is tracked in git (so the team sees test history). `.env` is gitignored — never commit real credentials. `.env.example` is the template and must never contain real values — double-check before committing any change to it. If you add a new API target, just change `REST_BASE_URL` locally — no code changes needed.

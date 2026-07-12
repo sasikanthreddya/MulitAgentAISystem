@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Dynamic Controls", () => {
-  test("TC6 [Positive] Dynamic Controls - Enable button enables the checkbox", async ({ page }) => {
+  test("TC6 [Positive] Dynamic Controls - Enable button enables the checkbox", { tag: "@sanity" }, async ({ page }) => {
     await page.goto("/dynamic_controls");
     const input = page.locator("#input-example input");
     await expect(input).toBeDisabled();
